@@ -1,0 +1,2 @@
+# WebGlTester
+PlayGroundでああやらこうやらやっていたが、独立した方が早い可能性
