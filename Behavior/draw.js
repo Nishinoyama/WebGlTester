@@ -62,7 +62,7 @@ var Projectile;
             }
             this.stage.addChild(this.circle);
 
-            this.image = PIXI.Texture.fromImage("/img/flower.png");
+            this.image = PIXI.Texture.fromImage("../img/flower.png");
             this.logoimage = new PIXI.Sprite( this.image );
             this.logoimage.anchor.x = 0.5;
             this.logoimage.anchor.y = 0.5;

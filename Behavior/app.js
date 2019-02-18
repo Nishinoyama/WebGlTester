@@ -24,7 +24,7 @@ var Projectile;
 
             this.container = new PIXI.Container();
             this.app.stage.addChild( this.container);
-            var texture = PIXI.Texture.fromImage('/img/flower.png');
+            var texture = PIXI.Texture.fromImage('../img/flower.png');
 
             for (var i = 0; i < 25; i++) {
                 var flower = new PIXI.Sprite(texture);
