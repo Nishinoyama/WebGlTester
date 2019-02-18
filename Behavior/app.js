@@ -60,14 +60,14 @@ var Projectile;
             var _this = this;
             for (var i = 0; i < 25; i++) {
                 var target = this.container.children[i];
-                if( target.isdown ){
+                if( target.isover ){
                     if( target.alpha < 0 ){
                         target.visible = false;
                         continue;
                     }
                     target.alpha -= 0.02;
-                    target.scale.x += 0.02;
-                    target.scale.y += 0.02;
+                    target.scale.x *= 0.98;
+                    target.scale.y *= 0.98;
                 }
             }
             this.app.render( this.app );
@@ -77,6 +77,9 @@ var Projectile;
         };
         Main.prototype.onButtonDown = function(){
             this.isdown = true;
+        };
+        Main.prototype.onButtonOver = function(){
+            this.isover = true;
         };
 
         return Main;
