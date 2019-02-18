@@ -6,6 +6,9 @@ window.addEventListener("load", function(){
 var OuterBorder = 0;
 var de;
 var Projectile;
+var x = innerWidth;
+var y = innerHeight;
+
 (function (Projectile) {
     /**
      * メインクラス
@@ -42,15 +45,38 @@ var Projectile;
                 this.container.addChild(flower);
             }
 
-            // Center on the screen
-            this.container.x = (this.app.screen.width - this.container.width) / 2;
-            this.container.y = (this.app.screen.height - this.container.height) / 2;
+            this.Particles = new PIXI.Container();
+            this.Particles.number = 30;
+            this.app.stage.addChild( this.Particles );
+            for (var i = 0; i < this.Particles.number  ; i++) {
+                var circle = new PIXI.Graphics();
+                circle.visible = false;
+                circle.beginFill(0xffffff , 0.8);
+                circle.drawCircle(0,0,15);
+                circle.endFill();
+                this.Particles.addChild( circle );
+            }
+            for (var i = 0; i < this.Particles.number  ; i++) {
+                var circle = new PIXI.Graphics();
+                circle.visible = false;
+                circle.beginFill(0xffffff , 0.6);
+                circle.drawCircle(0,0,15);
+                circle.endFill();
+                this.Particles.addChild( circle );
+            }
+            for (var i = 0; i < this.Particles.number  ; i++) {
+                var circle = new PIXI.Graphics();
+                circle.visible = false;
+                circle.beginFill(0xffffff , 0.4);
+                circle.drawCircle(0,0,15);
+                circle.endFill();
+                this.Particles.addChild( circle );
+            }
+            this.handleResize();
 
             
             this.app.ticker.add( function(){ return _this.handleTick(); });
 
-            // リサイズに応じる
-            this.handleResize();
             window.addEventListener("resize", function () {
                 _this.handleResize();
             });
@@ -65,15 +91,41 @@ var Projectile;
                         target.visible = false;
                         continue;
                     }
+                    if( target.alpha === 1 ){
+                        for (var i = 0; i < this.Particles.number*3; i++) {
+                            var hitcircle = this.Particles.children[i];
+                            hitcircle.visible = true;
+                            hitcircle.x = target.x + this.container.x;
+                            hitcircle.y = target.y + this.container.y;
+                        }
+                    }
                     target.alpha -= 0.02;
                     target.scale.x *= 0.98;
                     target.scale.y *= 0.98;
                 }
             }
+            for (var i = 0; i < this.Particles.number ; i++) {
+                var target = this.Particles.children[i];
+                target.x += 3*Math.sin(Math.PI*2*i/this.Particles.number);
+                target.y += 3*Math.cos(Math.PI*2*i/this.Particles.number);
+            }
+            for (var i = this.Particles.number ; i < this.Particles.number*2 ; i++) {
+                var target = this.Particles.children[i];
+                target.x += 2*Math.sin(Math.PI*2*i/this.Particles.number);
+                target.y += 2*Math.cos(Math.PI*2*i/this.Particles.number);
+            }
+            for (var i = this.Particles.number*2; i < this.Particles.number*3 ; i++) {
+                var target = this.Particles.children[i];
+                target.x += 1*Math.sin(Math.PI*2*i/this.Particles.number);
+                target.y += 1*Math.cos(Math.PI*2*i/this.Particles.number);
+            }
             this.app.render( this.app );
         };
         Main.prototype.handleResize = function(){
             this.app.renderer.resize(innerWidth-OuterBorder*2, innerHeight-OuterBorder*2 );
+            this.container.x = (this.app.screen.width - this.container.width) / 2;
+            this.container.y = (this.app.screen.height - this.container.height) / 2;
+
         };
         Main.prototype.onButtonDown = function(){
             this.isdown = true;
