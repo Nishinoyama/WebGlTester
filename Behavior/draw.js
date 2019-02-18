@@ -6,7 +6,6 @@ window.addEventListener("load", function(){
 });
 
 var debug;
-
 var OuterBorder = 0;
 
 var Projectile;
@@ -106,20 +105,13 @@ var Projectile;
             var gIMG = this.logoimage;
             // 仮想描画 ( HSP の redraw 0 みたいなもの )
 
-            this.paricleContainer.forEach(element => {
-                // element.clear();
-                element.x++;
-                element.y++;
-                element.beginFill("0xFFFFFF", 1);
-                element.drawCircle(0,0,30);
-                element.endFill();
-            });
             gCircle.clear();
-            gCircle.x++;
-            gCircle.y++;
             gCircle.beginFill("0xFFFFFF", 1);
             gCircle.drawCircle(0,0,30);
             gCircle.endFill();
+            gCircle.x++;
+            gCircle.y++;
+
             gIMG.x = innerWidth/2;
             gIMG.y = innerHeight/2;
             gIMG.rotation += 0.02;
@@ -132,7 +124,7 @@ var Projectile;
             // 自　分　を　呼　ぶ
             // アニメーションが1フレーム進んでから自分を呼ぶ
             requestAnimFrame( function(){ return _this.handleTick(); });
-        }
+        };
         Main.prototype.handleResize = function(){
             this.renderer.view.style.border = "" + OuterBorder + "px dashed darkblue";
             this.renderer.resize(innerWidth-OuterBorder*2, innerHeight-OuterBorder*2 );
